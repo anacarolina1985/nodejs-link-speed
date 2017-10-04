@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Jeferson Diniz">
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+
+
+    <title>Link Speed - Administração</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/style-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+  <section id="container" ng-app="user" ng-controller="CadastroController">
+      <!-- **********************************************************************************************************************************************************
+      TOP BAR CONTENT & NOTIFICATIONS
+      *********************************************************************************************************************************************************** -->
+      <!--header start-->
+      <header class="header black-bg">
+              <div class="sidebar-toggle-box">
+                  <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Ocultar Menu"></div>
+              </div>
+            <!--logo start-->
+            <a href="index.html" class="logo"><b>LINK SPEED</b></a>
+            <!--logo end-->
+            <div class="top-menu">
+            	<ul class="nav pull-right top-menu">
+                    <li><a class="logout" href="#" ng-click="logout()">Logout</a></li>
+            	</ul>
+            </div>
+        </header>
+      <!--header end-->
+
+
+      <aside>
+          <div id="sidebar"  class="nav-collapse ">
+              <!-- sidebar menu start-->
+              <ul class="sidebar-menu" id="nav-accordion">
+
+                  <p class="centered"><a href="index.html"><img src="assets/img/ui-sam.png" width="100"></a></p>
+                  <h5 class="centered">Link Speed</h5>
+                  <li class="mt">
+                      <a href="index.html">
+                          <i class="fa fa-dashboard"></i>
+                          <span>Dashboard</span>
+                      </a>
+                  </li>
+
+                  <div ng-show="exibeMenu">
+                  <li class="sub-menu">
+                      <a href="javascript:;" >
+                          <i class="fa fa-list-alt"></i>
+                          <span>Instalação</span>
+                      </a>
+                      <ul class="sub">
+                          <li><a  href="agendar_instalacao.html" ng-show="profilePermission == 1 || profilePermission == 2">Agendar Instalação</a></li>
+                      </ul>
+                       <ul class="sub">
+                          <li><a  href="visualiza_instalacoes.html" ng-show="profilePermission == 1 || profilePermission == 3 || profilePermission == 2">Visualizar Instalações</a></li>
+                      </ul>
+                       <ul class="sub">
+                          <li class><a  href="controle_instalacoes.html" ng-show="profilePermission != 3">Controle de Instalações</a></li>
+                      </ul>
+                  </li>
+                   <li class="sub-menu">
+                      <a href="javascript:;" >
+                          <i class="fa fa-wrench"></i>
+                          <span>Manutenção</span>
+                      </a>
+                      <ul class="sub">
+                          <li><a href="agendar_manutencao.html" ng-show="profilePermission == 1 || profilePermission == 2">Agendar Manutenção</a></li>
+                      </ul>
+                      <ul class="sub">
+                          <li><a href="visualiza_manutencoes.html" ng-show="profilePermission == 1 || profilePermission == 3 || profilePermission == 2" >Visualizar Manutenções</a></li>
+                      </ul>
+                  </li>
+                  <li class="sub-menu" ng-show="profilePermission == 1">
+                      <a href="javascript:;">
+                          <i class="fa fa-user"></i>
+                          <span>Usuários</span>
+                      </a>
+                      <ul class="sub">
+                          <li class="active"><a  href="cadastrar_usuario.html">Cadastrar Usuário</a></li>
+                          <li><a  href="visualiza_usuarios.html">Visualizar Usuários</a></li>
+                      </ul>
+                  </li>
+                </div>
+              </ul>
+              <!-- sidebar menu end-->
+          </div>
+      </aside><!--sidebar end-->
+
+      <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+      <!--main content start-->
+      <section id="main-content">
+        <section class="wrapper">
+          <h3><i class="fa fa-list-alt"></i> Usuários</h3>
+          <div class="row mt">
+            <div class="col-lg-12">
+              <div class="content-panel">
+                <form class="form-horizontal style-form" name="usuarioForm">
+
+                  <div class="form-group">
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" placeholder="Nome" ng-model="nome" name="nome" required>
+                    </div>
+                    <div class="col-sm-4">
+                    <input type="email" class="form-control" placeholder="Email" ng-model="email" name="email" required>
+                    </div>
+                    <div class="col-sm-4">
+                      <input type="password" class="form-control" placeholder="Senha" ng-model="senha" name="senha" required>
+                    </div>
+                  </div>
+
+                <div class="form-group">
+                  <div class="col-sm-4">
+                      <select class="form-control" ng-model="perfil" name="perfil" required>
+                        <option value="" selected disable>Perfil</option>
+                        <option ng-repeat="option in perfis" value="{{option.id}}">{{option.description}}</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-4">
+                    <input type="text" class="form-control" mask="(99) 9999-9999" placeholder="Telefone" name="telefone" ng-model="telefone" required>
+                    </div>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" placeholder="Cidade" name="cidade" ng-model="cidade" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-sm-6">
+                    <button type="submit" class="btn btn-danger btn-block" ng-click="usuarioForm.$valid && cadastrar()">Cancelar</button>
+                  </div>
+                  <div class="col-sm-6">
+                    <button type="submit" class="btn btn-info btn-block" ng-click="usuarioForm.$valid && cadastrar()">Cadastrar</button>
+                  </div>
+                </div>
+                </form>
+              </div><!-- /content-panel -->
+            </div><!-- /col-md-12 -->
+          </div><!-- /row -->
+
+        </section>
+      </section><!-- /MAIN CONTENT -->
+
+
+      <!--footer end-->
+  </section>
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="assets/js/jquery.scrollTo.min.js"></script>
+    <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+
+
+    <!--common script for all pages-->
+    <script src="assets/js/common-scripts.js"></script>
+
+    <!--Scritp do system!-->
+    <script type="text/javascript" src="assets/js/angular/angular.js"></script>
+    <script type="text/javascript" src="assets/js/angular-resource/angular-resource.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="assets/js/ng-file-upload/ng-file-upload.min.js"></script>
+    <script type="text/javascript" src="assets/js/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-datepicker/dist/angular-datepicker.min.js"></script>
+    <script type="text/javascript" src="assets/js/ngmap/build/scripts/ng-map.min.js"></script>
+    <script type="text/javascript" src="assets/js/ngMask/dist/ngMask.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-tooltips/dist/angular-tooltips.min.js"></script>
+    <!--<script type="text/javascript" src="assets/js/jquery/dist/jquery.min.js"></script>-->
+    <script type="text/javascript" src="assets/js/angular-perfect-scrollbar/src/angular-perfect-scrollbar.js"></script>
+    <script type="text/javascript" src="assets/js/perfect-scrollbar/min/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="assets/js/perfect-scrollbar/min/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-loading-bar/build/loading-bar.js"></script>
+
+    <script type="text/javascript" src="assets/js/ng-notify/dist/ng-notify.min.js"></script>
+    <link rel="stylesheet", href="assets/js/ng-notify/dist/ng-notify.min.css"/>
+
+    <script type="text/javascript" src="statics/js/modules.js"></script>
+    <script type="text/javascript" src="statics/js/started.js"></script>
+
+    <script type="text/javascript" src="statics/js/common/factories/database.js"></script>
+    <script type="text/javascript" src="statics/js/common/interceptors/http.js"></script>
+
+    <!--Scritp do controller!-->
+    <script type="text/javascript" src="statics/js/user/cadastro.js"></script>
+
+    <!--Scripts session-->
+    <script type="text/javascript" src="assets/js/angular-cookies/angular-cookies.js"></script>
+    <script type="text/javascript" src="assets/js/angular-route/angular-route.js"></script>
+
+    <!-- Pagination -->
+    <script type="text/javascript" src="assets/js/angularUtils-pagination/dirPagination.js"></script>
+
+  </body>
+</html>

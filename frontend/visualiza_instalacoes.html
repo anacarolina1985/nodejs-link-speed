@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Jeferson Diniz">
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+
+
+    <title>Link Speed - Administração</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/style-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+  <section id="container" ng-app="visualizacao" ng-controller="visualizarInstalacaoController">
+      <!-- **********************************************************************************************************************************************************
+      TOP BAR CONTENT & NOTIFICATIONS
+      *********************************************************************************************************************************************************** -->
+      <!--header start-->
+      <header class="header black-bg">
+              <div class="sidebar-toggle-box">
+                  <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Ocultar Menu"></div>
+              </div>
+            <!--logo start-->
+            <a href="index.html" class="logo"><b>LINK SPEED</b></a>
+            <!--logo end-->
+            <div class="top-menu">
+            	<ul class="nav pull-right top-menu">
+                    <li><a class="logout" href="#" ng-click="logout()">Logout</a></li>
+            	</ul>
+            </div>
+        </header>
+      <!--header end-->
+
+      <!-- **********************************************************************************************************************************************************
+      MAIN SIDEBAR MENU
+      *********************************************************************************************************************************************************** -->
+      <!--sidebar start-->
+      <aside>
+          <div id="sidebar"  class="nav-collapse ">
+              <!-- sidebar menu start-->
+              <ul class="sidebar-menu" id="nav-accordion">
+
+                  <p class="centered"><a href="index.html"><img src="assets/img/ui-sam.png" width="100"></a></p>
+                  <h5 class="centered">Link Speed</h5>
+                  <div ng-show="exibeMenu">
+                  <li class="mt">
+                      <a href="index.html">
+                          <i class="fa fa-dashboard"></i>
+                          <span>Dashboard</span>
+                      </a>
+                  </li>
+                  <li class="sub-menu">
+                      <a href="javascript:;" >
+                          <i class="fa fa-list-alt"></i>
+                          <span>Instalação</span>
+                      </a>
+                      <ul class="sub">
+                          <li ><a  href="agendar_instalacao.html" ng-show="profilePermission == 1 || profilePermission == 2">Agendar Instalação</a></li>
+                      </ul>
+                       <ul class="sub">
+                          <li class="active"><a  href="visualiza_instalacoes.html" ng-show="profilePermission == 1 || profilePermission == 3 || profilePermission == 2">Visualizar Instalações</a></li>
+                      </ul>
+                        <ul class="sub">
+                          <li class><a  href="controle_instalacoes.html" ng-show="profilePermission != 3">Controle de Instalações</a></li>
+                      </ul>
+                  </li>
+                   <li class="sub-menu">
+                      <a href="javascript:;" >
+                          <i class="fa fa-wrench"></i>
+                          <span>Manutenção</span>
+                      </a>
+                      <ul class="sub">
+                          <li><a href="agendar_manutencao.html" ng-show="profilePermission == 1 || profilePermission == 2">Agendar Manutenção</a></li>
+                      </ul>
+                      <ul class="sub">
+                          <li><a href="visualiza_manutencoes.html" ng-show="profilePermission == 1 || profilePermission == 2 || profilePermission == 3" >Visualizar Manutenções</a></li>
+                      </ul>
+                  </li>
+                  <li class="sub-menu" ng-show="profilePermission == 1">
+                      <a href="javascript:;">
+                          <i class="fa fa-user"></i>
+                          <span>Usuários</span>
+                      </a>
+                      <ul class="sub">
+                          <li><a  href="cadastrar_usuario.html">Cadastrar Usuário</a></li>
+                          <li><a  href="visualiza_usuarios.html">Visualizar Usuários</a></li>
+                      </ul>
+                  </li>
+                </div>
+              </ul>
+              <!-- sidebar menu end-->
+          </div>
+      </aside><!--sidebar end--> <!--sidebar end-->
+
+      <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+      <!--main content start-->
+      <section id="main-content">
+          <section class="wrapper">
+          	<h3><i class="fa fa-list-alt"></i> Instalações</h3>
+              <div class="row mt">
+                  <div class="col-md-12">
+                     <div class="form-group label-legend">
+                      <span class="label label-default label-mini">agendada</span>
+                      <span class="label label-info label-mini">Reagendada</span>
+                      <span class="label label-success label-mini">Em Execucao</span>
+                      <span class="label label-warning label-mini">Pronta</span>
+                      <span class="label label-danger label-mini">Cancelada</span>
+                      </div>
+                      <div class="content-panel">
+
+                      <div class="search-input">
+                      <input type="text" class="form-control" placeholder="Buscar cliente" ng-model="buscaCliente" ng-change="ConsultarInstalacoes()">
+                      </div>
+                        <table class="table table-bordered table-advance table-hover">
+                              <thead>
+                              <tr>
+                                  <th><i class="fa fa-user"></i> Data Agendamento</th>
+                                  <th><i class="fa fa-user"></i> Horário</th>
+                                  <th><i class="fa fa-user"></i> Cliente</th>
+                                  <th class="hidden-phone"><i class="fa fa-map-marker"></i> Lagradouro</th>
+                                  <th><i class="fa fa-check"></i> Numero</th>
+                                  <th><i class="fa fa-dot-circle-o"></i> Bairro</th>
+                                  <th><i class="fa fa-trophy"></i> Usuario</th>
+                                  <th><i class="fa fa-asterisk"></i> Senha</th>
+                                   <th><i class="fa fa-wrench"></i> Técnico</th>
+                                   <th><i class="fa fa-refresh"></i> Status</th>
+                                  <th>Ações</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr dir-paginate="instalacao in instalacoes|itemsPerPage:10">
+                                  <td class="hidden-phone">{{instalacao.data_agendamento}}</td>
+                                  <td class="hidden-phone">{{instalacao.hora_agendamento}}:00</td>
+                                  <td class="hidden-phone">{{instalacao.cliente}}</td>
+                                  <td class="hidden-phone">{{instalacao.logradouro}}</td>
+                                  <td class="hidden-phone">{{instalacao.numero}}</td>
+                                  <td class="hidden-phone">{{instalacao.bairro}}</td>
+                                  <td class="hidden-phone">{{instalacao.usuario}}</td>
+                                  <td>{{instalacao.senha}}</td>
+                                  <td>{{instalacao.tecnico}}</td>
+                                  <td>
+                                    <span class="label label-default label-mini" ng-show="instalacao.status_ag_id == 1">{{instalacao.status}}</span>
+                                    <span class="label label-info label-mini" ng-show="instalacao.status_ag_id == 2">{{instalacao.status}}</span>
+                                    <span class="label label-success label-mini" ng-show="instalacao.status_ag_id == 3">{{instalacao.status}}</span>
+                                    <span class="label label-warning label-mini" ng-show="instalacao.status_ag_id == 4">{{instalacao.status}}</span>
+                                    <span class="label label-danger label-mini" ng-show="instalacao.status_ag_id == 5">{{instalacao.status}}</span>
+                                  </td>
+                                  <td>
+                                      <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal_editar_instalacao" ng-show="instalacao.editavel == 1 || (instalacao.status_ag_id == '5' && profilePermission == 2) || profilePermission == 1"
+                                        ng-click="EditarAgendamento(instalacao.id)"><i class="fa fa-pencil"></i></button>
+                                      <button class="btn btn-danger btn-xs" ng-show="profilePermission != 3" ng-click="Excluir(instalacao.id)" ><i class="fa fa-trash-o "></i></button>
+                                  </td>
+                              </tr>
+                              </tbody>
+                          </table>
+                          <dir-pagination-controls
+                             max-size="5"
+                             direction-links="true"
+                             boundary-links="true" >
+                          </dir-pagination-controls>
+                      </div><!-- /content-panel -->
+                  </div><!-- /col-md-12 -->
+              </div><!-- /row -->
+
+		  </section>
+    </section><!-- /MAIN CONTENT -->
+  <div aria-hidden="true" aria-labelledby="editarInstalacao" role="dialog" tabindex="-1" id="modal_editar_instalacao" class="modal fade">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <form class="form-horizontal style-form" name="agendamentoForm">
+        <div class="modal-body">
+
+           <div class="form-group">
+             <div class="col-sm-3">
+               <label>Data</label>
+               <input type="date" class="form-control" ng-model="agendamentoEdicao.data_agendamento" name="dataAgendamento" ng-Readonly="profilePermission == 3" required>
+             </div>
+             <div class="col-sm-3">
+               <label>Data de vencimento</label>
+               <input type="date" class="form-control" ng-model="agendamentoEdicao.data_vencimento" name="dataVencimento" ng-Readonly="profilePermission == 3" required>
+             </div>
+             <div class="col-sm-2">
+              <label>Técnico</label>
+              <select class="form-control" ng-model="agendamentoEdicao.tecnico_id" name="tecnicoAgendamento" required>
+               <option ng-repeat="option in agendamentoEdicao.tecnicos" value="{{option.id}}">{{option.nome}}</option>
+             </select>
+           </div>
+           <div class="col-sm-2">
+             <label>Horário</label>
+             <select class="form-control" ng-model="agendamentoEdicao.hora_agendamento" name="horario" ng-Readonly="profilePermission == 3" required>
+              <option value="9">9:00</option>
+              <option value="10">10:00</option>
+              <option value="11">11:00</option>
+              <option value="13">13:00</option>
+              <option value="14">14:00</option>
+              <option value="15">15:00</option>
+              <option value="16">16:00</option>
+              <option value="17">17:00</option>
+              <option value="18">18:00</option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            <label>Periodo</label>
+            <select class="form-control" ng-model="agendamentoEdicao.periodo" name="periodo" ng-Readonly="profilePermission == 3" required>
+              <option value="1">Manhã</option>
+              <option value="2">Tarde</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-6">
+            <input type="text" class="form-control" placeholder="Nome" ng-model="agendamentoEdicao.cliente" name="cliente" required>
+          </div>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" mask="999.999.999-99" placeholder="CPF" ng-model="agendamentoEdicao.cpf" name="cpf" >
+          </div>
+          <div class="col-sm-2">
+           <select class="form-control" ng-model="agendamentoEdicao.statusagendamento" name="statusAgendamento" required>
+              <option value="1" class="label-default label-mini" selected>Agendada</option>
+              <option value="3" class="label-success label-mini">Em execução</option>
+              <option value="2" class="label-info label-mini">Reagendada</option>
+              <option value="4" class="label-warning label-mini">Pronta</option>
+              <option value="5" class="label-danger label-mini">Cancelada</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-4">
+            <input type="text" class="form-control" mask="99999-999" placeholder="CEP" ng-model="agendamentoEdicao.cep" name ="cep" ng-change="atualizaEndereco()">
+          </div>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" placeholder="Rua" ng-model="agendamentoEdicao.logradouro" name="rua">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-4">
+            <input class="form-control" placeholder="Numero" ng-model="agendamentoEdicao.numero" name="numero">
+          </div>
+          <div class="col-sm-4">
+            <input class="form-control" placeholder="Complemento" ng-model="agendamentoEdicao.complemento" name="complemento">
+          </div>
+          <div class="col-sm-4">
+            <input class="form-control" placeholder="Bairro" ng-model="agendamentoEdicao.bairro" name="bairro">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-4">
+            <input type="text" class="form-control" ng-model="agendamentoEdicao.cidade" name="cidade" placeholder="Cidade">
+          </select>
+        </div>
+        <div class="col-sm-4">
+          <select class="form-control" ng-model="agendamentoEdicao.estado" name="estado">
+            <option value="" selected>Estado</option>
+            <option value="AC">AC</option>
+            <option value="AL">AL</option>
+            <option value="AP">AP</option>
+            <option value="AM">AM</option>
+            <option value="BA">BA</option>
+            <option value="CE">CE</option>
+            <option value="DF">DF</option>
+            <option value="ES">ES</option>
+            <option value="GO">GO</option>
+            <option value="MA">MA</option>
+            <option value="MT">MT</option>
+            <option value="MS">MS</option>
+            <option value="MG">MG</option>
+            <option value="PA">PA</option>
+            <option value="PB">PB</option>
+            <option value="PR">PR</option>
+            <option value="PE">PE</option>
+            <option value="PI">PI</option>
+            <option value="RJ">RJ</option>
+            <option value="RN">RN</option>
+            <option value="RS">RS</option>
+            <option value="RO">RO</option>
+            <option value="RR">RR</option>
+            <option value="SC">SC</option>
+            <option value="SP">SP</option>
+            <option value="SE">SE</option>
+            <option value="TO">TO</option>
+          </select>
+        </div>
+        <div class="col-sm-4" >
+          <input class="form-control" mask="(99) 9999-9999" placeholder="Telefone" ng-model="agendamentoEdicao.telefone" name="telefone" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-4">
+          <input type="text" class="form-control" placeholder="Usúario" ng-model="agendamentoEdicao.usuario" name="usurario" required>
+        </div>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" placeholder="Senha" ng-model="agendamentoEdicao.senha" name="senha" required>
+        </div>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" placeholder="Plano" ng-model="agendamentoEdicao.plano" name="plano" >
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-12">
+          <textarea name=""class="form-control" rows="3" placeholder="Descrição" ng-model="agendamentoEdicao.descricao" name="descricao"></textarea>
+        </div>
+      </div>
+  </div>
+  <div class="modal-footer">
+    <button data-dismiss="modal" class="btn btn-default" type="button">Cancelar</button>
+    <button class="btn btn-theme" data-dismiss="modal" type="button" ng-click="agendamentoForm.$valid && SalvarEdicaoAgendamento()">Alterar</button>
+  </div>
+  </form>
+</div>
+</div>
+</div>
+
+</section>
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="assets/js/jquery.scrollTo.min.js"></script>
+    <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+
+
+    <!--common script for all pages-->
+    <script src="assets/js/common-scripts.js"></script>
+
+	<!--<script>
+      //custom select box
+
+      $(function(){
+          $('select.styled').customSelect();
+      });
+
+	</script>-->
+
+    <!--Scritp do system!-->
+    <script type="text/javascript" src="assets/js/angular/angular.js"></script>
+    <script type="text/javascript" src="assets/js/angular-resource/angular-resource.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="assets/js/ng-file-upload/ng-file-upload.min.js"></script>
+    <script type="text/javascript" src="assets/js/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-datepicker/dist/angular-datepicker.min.js"></script>
+    <script type="text/javascript" src="assets/js/ngmap/build/scripts/ng-map.min.js"></script>
+    <script type="text/javascript" src="assets/js/ngMask/dist/ngMask.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-tooltips/dist/angular-tooltips.min.js"></script>
+    <!--<script type="text/javascript" src="assets/js/jquery/dist/jquery.min.js"></script>-->
+    <script type="text/javascript" src="assets/js/angular-perfect-scrollbar/src/angular-perfect-scrollbar.js"></script>
+    <script type="text/javascript" src="assets/js/perfect-scrollbar/min/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="assets/js/perfect-scrollbar/min/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-loading-bar/build/loading-bar.js"></script>
+
+    <script type="text/javascript" src="assets/js/ng-notify/dist/ng-notify.min.js"></script>
+    <link rel="stylesheet", href="assets/js/ng-notify/dist/ng-notify.min.css"/>
+
+    <script type="text/javascript" src="statics/js/modules.js"></script>
+    <script type="text/javascript" src="statics/js/started.js"></script>
+
+    <script type="text/javascript" src="statics/js/common/factories/database.js"></script>
+    <script type="text/javascript" src="statics/js/common/interceptors/http.js"></script>
+
+    <!--Scritp do controller!-->
+    <script type="text/javascript" src="statics/js/agendamento/visualizacao.js"></script>
+
+
+    <!--Scripts session-->
+    <script type="text/javascript" src="assets/js/angular-cookies/angular-cookies.js"></script>
+    <script type="text/javascript" src="assets/js/angular-route/angular-route.js"></script>
+
+    <!-- Pagination -->
+    <script type="text/javascript" src="assets/js/angularUtils-pagination/dirPagination.js"></script>
+
+  </body>
+</html>

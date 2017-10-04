@@ -1,0 +1,44 @@
+{
+  "name": "speedlink",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "^5.7.1",
+    "npm": "^3.3.7"
+  },
+  "keywords": [],
+  "private": true,
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "connect-multiparty": "^2.0.0",
+    "cookie-parser": "^1.4.0",
+    "directmail": "^0.1.8",
+    "dotenv": "^2.0.0",
+    "es6-promise": "^3.0.2",
+    "express": "^4.13.3",
+    "express-session": "^1.12.1",
+    "gulp": "^3.9.0",
+    "gulp-imagemin": "^2.4.0",
+    "gulp-stylus": "^2.2.0",
+    "gulp-uglify": "^1.5.1",
+    "gulp-util": "^3.0.7",
+    "imagemin-pngquant": "^4.2.0",
+    "jade": "^1.11.0",
+    "jsonwebtoken": "^5.5.4",
+    "mkdirp": "^0.5.1",
+    "mysql": "^2.10.2",
+    "nodemailer": "^2.0.0",
+    "nodemailer-mandrill-transport": "^1.0.0",
+    "nodemailer-smtp-transport": "^2.0.1",
+    "smtpapi": "1.2.0",
+    "stylus": "^0.53.0",
+    "redis": "^0.12.1",
+    "connect-redis" : "^3.0.2" 
+  }
+}

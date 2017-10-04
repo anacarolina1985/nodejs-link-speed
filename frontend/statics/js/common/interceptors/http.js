@@ -1,0 +1,1 @@
+!function(angular){"use strict";angular.module("common").factory("NetworkInterceptor",function($q,db,$injector,cfpLoadingBar){var obj={};return obj.request=function(config){var user=db.getObject("User");return console.log(user.token),config.url.indexOf("map")>0?config:config.url.indexOf("postmon")>0?config:(user&&(config.headers["token-user"]=user.token),config)},obj})}(angular);

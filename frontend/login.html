@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Jeferson Diniz">
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+
+
+    <title>Link Speed - Administração</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/style-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+      <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+
+	  <div id="login-page">
+	  	<div class="container" ng-app="auth" ng-controller="AuthController">
+		      <form name="loginForm" class="form-login">
+		        <h2 class="form-login-heading">Login</h2>
+		        <div class="login-wrap">
+		            <input type="text" class="form-control" placeholder="Email" ng-model="email" autofocus required>
+		            <br>
+		            <input type="password" class="form-control" placeholder="Senha" ng-model="password" required>
+		            <br>
+                <select class="form-control" ng-model="profile" required>
+                      <option value="" selected disabled>Perfil</option>
+                      <option ng-repeat="option in perfis" value="{{option.id}}">{{option.description}}</option>
+                </select>
+		            <label class="checkbox">
+		                <span class="pull-right">
+		                    <a data-toggle="modal" href="login.html#myModal"> Esqueceu sua senha?</a>
+		                </span>
+		            </label>
+		            <button class="btn btn-theme btn-block" ng-click="loginForm.$valid && login()" type="submit"><i class="fa fa-lock"></i> ENTRAR</button>
+
+
+		        </div>
+          </form>
+
+          <form name="recoverPassword">
+            <!-- Modal -->
+	          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+	              <div class="modal-dialog">
+	                  <div class="modal-content">
+	                      <div class="modal-header">
+	                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                          <h4 class="modal-title">Esqueceu sua senha ?</h4>
+	                      </div>
+	                      <div class="modal-body">
+	                          <p>Insira abaixo o Email cadastro para redefinir sua senha.</p>
+	                          <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix" ng-model="emailRecovery" required>
+
+	                      </div>
+	                      <div class="modal-footer">
+	                          <button data-dismiss="modal" class="btn btn-default" type="button">Cancelar</button>
+	                          <button class="btn btn-theme" type="button" ng-click="recoverPassword.$valid && recoveryPassword()">Alterar</button>
+	                      </div>
+	                  </div>
+	              </div>
+	          </div>
+	          <!-- modal -->
+          </form>
+        </div>
+	  </div>
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+
+    <!--BACKSTRETCH-->
+    <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+    <script type="text/javascript" src="assets/js/jquery.backstretch.min.js"></script>
+    <!--<script>
+        // $.backstretch("assets/img/login-bg.jpg", {speed: 500});
+    </script>-->
+
+    <!--Scritp do system!-->
+    <script type="text/javascript" src="assets/js/angular/angular.js"></script>
+    <script type="text/javascript" src="assets/js/angular-resource/angular-resource.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="assets/js/ng-file-upload/ng-file-upload.min.js"></script>
+    <script type="text/javascript" src="assets/js/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-datepicker/dist/angular-datepicker.min.js"></script>
+    <script type="text/javascript" src="assets/js/ngmap/build/scripts/ng-map.min.js"></script>
+    <script type="text/javascript" src="assets/js/ngMask/dist/ngMask.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-tooltips/dist/angular-tooltips.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-perfect-scrollbar/src/angular-perfect-scrollbar.js"></script>
+    <script type="text/javascript" src="assets/js/perfect-scrollbar/min/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="assets/js/perfect-scrollbar/min/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-loading-bar/build/loading-bar.js"></script>
+
+    <script type="text/javascript" src="assets/js/ng-notify/dist/ng-notify.min.js"></script>
+    <link rel="stylesheet", href="assets/js/ng-notify/dist/ng-notify.min.css"/>
+
+    <script type="text/javascript" src="statics/js/modules.js"></script>
+    <script type="text/javascript" src="statics/js/started.js"></script>
+
+    <script type="text/javascript" src="statics/js/common/factories/database.js"></script>
+    <script type="text/javascript" src="statics/js/common/interceptors/http.js"></script>
+
+    <!--Scritp do controller!-->
+    <script type="text/javascript" src="statics/js/auth/loginController.js"></script>
+
+    <!--Scripts session-->
+    <script type="text/javascript" src="assets/js/angular-cookies/angular-cookies.js"></script>
+    <script type="text/javascript" src="assets/js/angular-route/angular-route.js"></script>
+
+  </body>
+</html>

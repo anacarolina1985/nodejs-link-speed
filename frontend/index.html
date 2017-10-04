@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Jeferson Diniz">
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+
+
+    <title>Link Speed - Administração</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="assets/css/zabuto_calendar.css">
+    <link rel="stylesheet" type="text/css" href="assets/js/gritter/css/jquery.gritter.css" />
+    <link rel="stylesheet" type="text/css" href="assets/lineicons/style.css">
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/style-responsive.css" rel="stylesheet">
+
+    <script src="assets/js/chart-master/Chart.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+  <section id="container" ng-app="auth" ng-controller="menuLogin">
+      <!-- **********************************************************************************************************************************************************
+      TOP BAR CONTENT & NOTIFICATIONS
+      *********************************************************************************************************************************************************** -->
+      <!--header start-->
+      <header class="header black-bg">
+              <div class="sidebar-toggle-box">
+                  <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Ocultar Menu"></div>
+              </div>
+            <!--logo start-->
+            <a href="index.html" class="logo"><b>LINK SPEED</b></a>
+            <!--logo end-->
+            <div class="top-menu">
+            	<ul class="nav pull-right top-menu">
+                    <!--<li><a class="logout" href="login.html" ng-show="showLogin">Login</a></li>
+                    <li><a class="logout" href="#" ng-click="logout()" ng-show="showLogout">Logout</a></li>-->
+                    <li><a class="logout" href="login.html" ng-show="!logged">Login</a></li>
+                    <li><a class="logout" href="#" ng-click="logout()" ng-show="logged">Logout</a></li>
+            	</ul>
+            </div>
+        </header>
+      <!--header end-->
+
+      <!-- **********************************************************************************************************************************************************
+      MAIN SIDEBAR MENU
+      *********************************************************************************************************************************************************** -->
+      <!--sidebar start-->
+      <aside>
+          <div id="sidebar"  class="nav-collapse ">
+              <!-- sidebar menu start-->
+              <ul class="sidebar-menu" id="nav-accordion">
+
+                  <p class="centered"><a href="index.html"><img src="assets/img/ui-sam.png" width="100"></a></p>
+                  <h5 class="centered">Link Speed</h5>
+				          <div ng-show="exibeMenu">
+                  <li class="mt">
+                      <a class="active" href="index.html">
+                          <i class="fa fa-dashboard"></i>
+                          <span>Dashboard</span>
+                      </a>
+                  </li>
+                  <li class="sub-menu">
+                      <a href="javascript:;">
+                          <i class="fa fa-list-alt"></i>
+                          <span>Instalação</span>
+                      </a>
+                      <ul class="sub">
+                          <li><a  href="agendar_instalacao.html" ng-show="profilePermission == 1 || profilePermission == 2">Agendar Instalação</a></li>
+                      </ul>
+                       <ul class="sub">
+                          <li><a  href="visualiza_instalacoes.html" ng-show="profilePermission == 1 || profilePermission == 3 || profilePermission == 2">Visualizar Instalações</a></li>
+                      </ul>
+                        <ul class="sub">
+                          <li class><a  href="controle_instalacoes.html" ng-show="profilePermission != 3">Controle de Instalações</a></li>
+                      </ul>
+                  </li>
+                   <li class="sub-menu">
+                      <a href="javascript:;">
+                          <i class="fa fa-wrench"></i>
+                          <span>Manutenção</span>
+                      </a>
+                      <ul class="sub">
+                          <li><a href="agendar_manutencao.html" ng-show="profilePermission == 1 || profilePermission == 2">Agendar Manutenção</a></li>
+                      </ul>
+                      <ul class="sub">
+                          <li><a href="visualiza_manutencoes.html" ng-show="profilePermission == 1 || profilePermission == 3 || profilePermission == 2" >Visualizar Manutenções</a></li>
+                      </ul>
+                  </li>
+                  <li class="sub-menu" ng-show="profilePermission == 1">
+                      <a href="javascript:;" >
+                          <i class="fa fa-user"></i>
+                          <span>Usuários</span>
+                      </a>
+                      <ul class="sub">
+                          <li><a  href="cadastrar_usuario.html">Cadastrar Usuário</a></li>
+                          <li><a  href="visualiza_usuarios.html">Visualizar Usuários</a></li>
+                      </ul>
+                  </li>
+                </div>
+              </ul>
+              <!-- sidebar menu end-->
+          </div>
+      </aside>
+      <!--sidebar end-->
+
+      <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+      <!--main content start-->
+      <section id="main-content">
+        <section class="wrapper">
+
+          <div class="row">
+            <div class="col-lg-12 main-chart">
+
+              <div class="row mt">
+                <!-- SERVER STATUS PANELS -->
+                <div class="col-md-6 col-sm-6 mb">
+                  <div class="white-panel pn donut-chart">
+                   <div class="white-header">
+                     <h5>Ordem de instalações em aberto</h5>
+                   </div>
+                   <div class="row">
+                     <div class="col-sm-6 col-xs-6 goleft">
+                      <p><i class="fa fa-database"></i> 1</p>
+                    </div>
+                  </div>
+                  <canvas id="serverstatus01" height="120" width="120"></canvas>
+                  <script>
+                   var doughnutData = [
+                   {
+                    value: 1,
+                    color:"#68dff0"
+                  },
+                  {
+                    value : 100,
+                    color : "#fdfdfd"
+                  }
+                  ];
+                  var myDoughnut = new Chart(document.getElementById("serverstatus01").getContext("2d")).Doughnut(doughnutData);
+                </script>
+              </div>
+            </div><!-- /col-md-4-->
+
+              <div class="col-md-6 col-sm-6 mb">
+                  <div class="white-panel pn donut-chart">
+                   <div class="white-header">
+                     <h5>Ordem de manutenções em aberto</h5>
+                   </div>
+                   <div class="row">
+                     <div class="col-sm-6 col-xs-6 goleft">
+                      <p><i class="fa fa-database"></i> 1</p>
+                    </div>
+                  </div>
+                  <canvas id="serverstatus02" height="120" width="120"></canvas>
+                  <script>
+                   var doughnutData = [
+                   {
+                    value: 1,
+                    color:"#68dff0"
+                  },
+                  {
+                    value : 100,
+                    color : "#fdfdfd"
+                  }
+                  ];
+                  var myDoughnut = new Chart(document.getElementById("serverstatus02").getContext("2d")).Doughnut(doughnutData);
+                </script>
+              </div>
+            </div><!-- /col-md-4-->
+          </div><!-- /row -->
+        </div><!-- /col-lg-9 END SECTION MIDDLE -->
+      </div>
+    </section>
+  </section>
+</section>
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/jquery-1.8.3.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="assets/js/jquery.scrollTo.min.js"></script>
+    <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="assets/js/jquery.sparkline.js"></script>
+
+
+    <!--common script for all pages-->
+    <script src="assets/js/common-scripts.js"></script>
+
+    <script type="text/javascript" src="assets/js/gritter/js/jquery.gritter.js"></script>
+    <script type="text/javascript" src="assets/js/gritter-conf.js"></script>
+
+    <!--script for this page-->
+    <script src="assets/js/sparkline-chart.js"></script>
+	<script src="assets/js/zabuto_calendar.js"></script>
+
+
+
+	<!--Scritp do system!-->
+    <script type="text/javascript" src="assets/js/angular/angular.js"></script>
+    <script type="text/javascript" src="assets/js/angular-resource/angular-resource.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="assets/js/ng-file-upload/ng-file-upload.min.js"></script>
+    <script type="text/javascript" src="assets/js/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-datepicker/dist/angular-datepicker.min.js"></script>
+    <script type="text/javascript" src="assets/js/ngmap/build/scripts/ng-map.min.js"></script>
+    <script type="text/javascript" src="assets/js/ngMask/dist/ngMask.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-tooltips/dist/angular-tooltips.min.js"></script>
+    <!--<script type="text/javascript" src="assets/js/jquery/dist/jquery.min.js"></script>-->
+    <script type="text/javascript" src="assets/js/angular-perfect-scrollbar/src/angular-perfect-scrollbar.js"></script>
+    <script type="text/javascript" src="assets/js/perfect-scrollbar/min/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="assets/js/perfect-scrollbar/min/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-loading-bar/build/loading-bar.js"></script>
+
+    <script type="text/javascript" src="assets/js/ng-notify/dist/ng-notify.min.js"></script>
+    <link rel="stylesheet", href="assets/js/ng-notify/dist/ng-notify.min.css"/>
+
+    <script type="text/javascript" src="statics/js/modules.js"></script>
+    <script type="text/javascript" src="statics/js/started.js"></script>
+
+    <script type="text/javascript" src="statics/js/common/factories/database.js"></script>
+    <script type="text/javascript" src="statics/js/common/interceptors/http.js"></script>
+
+    <!--Scritp do controller!-->
+    <script type="text/javascript" src="statics/js/auth/loginController.js"></script>
+
+    <!--Scripts session-->
+    <script type="text/javascript" src="assets/js/angular-cookies/angular-cookies.js"></script>
+    <script type="text/javascript" src="assets/js/angular-route/angular-route.js"></script>
+
+  </body>
+</html>
