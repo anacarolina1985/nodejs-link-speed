@@ -20,7 +20,7 @@
     }));
   }else{
     app.use(expressSession({ resave: false, saveUninitialized: true, secret: 'speedlink',
-                        store: new redisStore({ host: '127.0.0.1', port: '', client: client, ttl :  260})
+                        store: new redisStore({ host: '0.0.0.0', port: '', client: client, ttl :  260})
     }));
   }
   app.set('trust proxy', 1) // trust first proxy
@@ -31,8 +31,9 @@
   Setando endereço e porta de acesso.
   */
 
-  var ipaddress = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
-  var port      = process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 3000;
+
+  var ipaddress = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
+  var port      = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
 
 
   app.listen(port,ipaddress, function() {

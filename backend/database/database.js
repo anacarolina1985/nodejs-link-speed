@@ -37,7 +37,7 @@ if(process.env.OPENSHIFT_NODEJS_IP){
   config = {
        host     : '127.0.0.1' // Host do Mysql
       ,user     : 'root'  // Usuário do banco
-      ,password : ''  // Senha do banco
+      ,password : 'root'  // Senha do banco
       ,database : 'speedlink' // Banco de dados
   };
 
